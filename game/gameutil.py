@@ -26,14 +26,10 @@ class GameUtil:
     ]
 
     #
-    # Create game grid with random characters from the above cell list
+    # Generate game grid with random characters from the above cell list
     #
     def generate_grid(self):
         grid = ""
         for entry in GameUtil.cells:
             grid = grid +  entry[random.randrange(0,6)]
         return grid
-
-    ## TODO:
-    def get_all_grid_words(self,row,column,min_size):
-        return {}

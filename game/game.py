@@ -1,4 +1,5 @@
 from .gameutil import GameUtil
+from datetime import datetime
 import uuid
 
 class Game:
@@ -18,9 +19,5 @@ class Game:
         env['row'] =  self.board_row
         env['column'] = self.board_column
         env['grid'] = self.gameutil.generate_grid()
-        env['words'] = self.gameutil.get_all_grid_words(
-            self.board_row,
-            self.board_column,
-            self.min_length_valid_word
-        )
+        env['timestamp'] = datetime.now()
         return env
