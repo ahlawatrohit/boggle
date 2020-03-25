@@ -16,13 +16,6 @@ class GameManager:
     @classmethod
     def create_new_game(cls):
         game = Game()
-        game.create_game_board()
-        game.create_game_words()
-        #add to cache -> get a trie and write to cache
-        BoggleCache.generate_game_words_trie(
-            game.grid,
-            game.row,
-            game.column,
-            game.game_id
-            )
+        game.create_game()
+        BoggleCache.gameid_to_game_cache[game.game_id] = game
         return game.get_game_response()
