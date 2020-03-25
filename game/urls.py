@@ -1,10 +1,9 @@
 from django.urls import path
 from . import views
-from .bogglecache import BoggleCache
+from .game_manager import GameManager
 
 urlpatterns = [
-    path('start', views.start ),
+    path('start', views.start_game),
 ]
 
-bogglecache = BoggleCache()
-bogglecache.load_trie_on_startup()
+GameManager.load_english_dictionary()
