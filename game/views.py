@@ -9,3 +9,13 @@ def start_game(request):
         json.dumps(GameManager.create_new_game()),
         content_type='application/json'
     )
+
+def check_word(request):
+    word = request.GET['word']
+    game_id = request.GET['game_id']
+    print (word)
+    print (game_id)
+    return HttpResponse(
+        json.dumps(GameManager.check_word(game_id, word.lower())),
+        content_type='application/json'
+    )

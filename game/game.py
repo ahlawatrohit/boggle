@@ -64,9 +64,11 @@ class Game:
         word_list = []
         self._game_words_trie(BoggleCache.english_words_trie_root, word_list)
         game_trie = TrieBuilder.build_english_words_trie(word_list)
-        self.valid_words = game_trie
+        self.valid_words_trie = game_trie
 
-
+    #
+    # Create a new game and initalize the board and valid words
+    #
     def create_game(self):
         self.create_game_board()
         self.create_valid_game_words()
@@ -85,6 +87,12 @@ class Game:
         return response
 
     #
+    # Checks if the given word exists in the given trie
+    #
+    def is_valid_word(self, word):
+        return TrieBuilder.exists(word, self.valid_words_trie)
+
+    #
     # Create a matrix of input string and perform depth first search
     # on it to find all the valid words by comparing to english trienode
     # that we have in memory
@@ -98,7 +106,7 @@ class Game:
         for i in range(self.row) :
             for j in range(self.column) :
                 board[i][j] = grid[index]
-                index +=1
+                index += 1
         for row in range(self.row):
             for column in range(self.column) :
                 letter = board[row][column]
@@ -116,7 +124,7 @@ class Game:
         board,
         english_trie,
         game_words_list
-        ):
+    ):
         if (row, column) in visited:
             return
         letter = board[row][column]
@@ -129,16 +137,17 @@ class Game:
                 print(now_word)
                 game_words_list.append(now_word)
 
-            neighbors = self._get_valid_directions(row,column)
+            neighbors = self._get_valid_directions(row, column)
             for dir in neighbors:
-                self._traverse_grid(dir[0],
-                        dir[1],
-                        visited[::],
-                        now_word,
-                        board,
-                        english_trie[letter],
-                        game_words_list
-                    )
+                self._traverse_grid(
+                    dir[0],
+                    dir[1],
+                    visited[::],
+                    now_word,
+                    board,
+                    english_trie[letter],
+                    game_words_list
+                )
 
     #
     #  Returns valid directions on the board for a given cell

@@ -21,3 +21,14 @@ class TrieBuilder:
             trie_node[word[0]] = {'valid': len(word) == 1, 'next': {}}
         # recursively build trienode
         cls._generate_english_word_trie(word[1:], trie_node[word[0]])
+
+    #
+    # Returns true if the given word exists in the given trie
+    #
+    @classmethod
+    def exists(cls, word, trie_node):
+        if not word:
+            return True
+        if word[0] not in trie_node:
+            return False
+        return cls.exists(word[1:], trie_node[word[0]])
