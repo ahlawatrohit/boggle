@@ -7,6 +7,7 @@ class GameManager:
     ERROR_WORD_TOO_SHORT = "Word entered is too short"
     ERROR_NOT_VALID_WORD = "Not a valid word"
     ERROR_NO_GAME_FOUND = "No such game found"
+    ERROR_WORD_ALREADY_GUESSED = "Word already guessed"
     MESSAGE_VALID_WORD = "Awesome!!!"
     #
     # Load the english words dictionary on application startup. This dictionary
@@ -34,23 +35,28 @@ class GameManager:
     #
     @classmethod
     def check_word(cls, game_id, word):
-        response = {}
         if game_id in BoggleCache.gameid_to_game_cache:
             game = BoggleCache.gameid_to_game_cache.get(game_id)
             word_length = len(word)
             if word_length < game.acceptable_min_word_length:
-                response['status'] = cls.INVALID
-                response['message'] = cls.ERROR_WORD_TOO_SHORT
-                return response
+                return cls.build_response(cls.INVALID, cls.ERROR_WORD_TOO_SHORT, 0)
+            already_guessed = game.is_word_already_guessed(word)
+            if bool(already_guessed) == True:
+                return cls.build_response(cls.INVALID, cls.ERROR_WORD_ALREADY_GUESSED, 0)
             exists = game.is_valid_word(word)
             if bool(exists) == True:
-                response['status'] = cls.VALID
-                response['message'] = cls.MESSAGE_VALID_WORD
-                return response
+                return cls.build_response(cls.VALID, cls.MESSAGE_VALID_WORD, len(word))
             else:
-                response['status'] = cls.INVALID
-                response['message'] = cls.ERROR_NOT_VALID_WORD
-                return response
-        response['status'] = cls.INVALID
-        response['message'] = cls.ERROR_NO_GAME_FOUND
-        return response;
+                return cls.build_response(cls.INVALID, cls.ERROR_NOT_VALID_WORD, 0)
+        return cls.build_response(cls.INVALID, cls.ERROR_NO_GAME_FOUND, 0)
+
+    #
+    # Build response for validation based on current game state
+    #
+    @classmethod
+    def build_response(cls, status, message,score):
+        response = {}
+        response['status'] = status
+        response['message'] = message
+        response['score'] = score
+        return response

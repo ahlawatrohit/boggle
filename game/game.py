@@ -47,6 +47,8 @@ class Game:
         self.grid = ''
         self.acceptable_min_word_length = 3
         self.timestamp = str(datetime.now())
+        self.guessed_words = []
+        self.valid_words_trie = {'valid': False, 'next': {}}
 
     #
     # Generate game grid with random characters from the above cells list
@@ -90,8 +92,13 @@ class Game:
     # Checks if the given word exists in the given trie
     #
     def is_valid_word(self, word):
-        return TrieBuilder.exists(word, self.valid_words_trie)
+        found = TrieBuilder.exists(word, self.valid_words_trie)
+        if bool(found) == True:
+            self.guessed_words.append(word)
+        return found
 
+    def is_word_already_guessed(self, word):
+        return word in self.guessed_words
     #
     # Create a matrix of input string and perform depth first search
     # on it to find all the valid words by comparing to english trienode
