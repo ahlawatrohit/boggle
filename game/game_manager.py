@@ -38,17 +38,20 @@ class GameManager:
         if game_id in BoggleCache.gameid_to_game_cache:
             game = BoggleCache.gameid_to_game_cache.get(game_id)
             list = game.get_game_words_list()
-        return list
+        response = {}
+        response['result'] = list
+        return response
 
     #
     # Rotate the game grid for a given game id
     #
     @classmethod
     def rotate_game_grid(cls, game_id):
+        response = {}
         if game_id in BoggleCache.gameid_to_game_cache:
             game = BoggleCache.gameid_to_game_cache.get(game_id)
-            return game.rotate_game_grid()
-        return ""
+            response['grid'] = game.rotate_game_grid()
+        return response
     #
     # Validate if the given word for a gameid is a valid word
     #
