@@ -9,6 +9,7 @@ class GameManager:
     ERROR_NO_GAME_FOUND = "No such game found"
     ERROR_WORD_ALREADY_GUESSED = "Word already guessed"
     MESSAGE_VALID_WORD = "Awesome!!!"
+
     #
     # Load the english words dictionary on application startup. This dictionary
     # (loaded in a trie) contains the list of valid english word from the nltk
@@ -17,7 +18,6 @@ class GameManager:
     @classmethod
     def load_english_dictionary(cls):
         BoggleCache.load_english_dictionary()
-        print("Boggle Cache initalized")
 
     #
     # Create a new game
@@ -25,11 +25,30 @@ class GameManager:
     @classmethod
     def create_new_game(cls):
         game = Game()
-        game.create_game()
-        print("writing to game_id" + game.game_id)
+        game.create_game(BoggleCache.get_english_word_trie_root())
         BoggleCache.gameid_to_game_cache[game.game_id] = game
         return game.get_game_response()
 
+    #
+    # Get list of game words for a given game id
+    #
+    @classmethod
+    def get_game_words(cls, game_id):
+        list = []
+        if game_id in BoggleCache.gameid_to_game_cache:
+            game = BoggleCache.gameid_to_game_cache.get(game_id)
+            list = game.get_game_words_list()
+        return list
+
+    #
+    # Rotate the game grid for a given game id
+    #
+    @classmethod
+    def rotate_game_grid(cls, game_id):
+        if game_id in BoggleCache.gameid_to_game_cache:
+            game = BoggleCache.gameid_to_game_cache.get(game_id)
+            return game.rotate_game_grid()
+        return ""
     #
     # Validate if the given word for a gameid is a valid word
     #
@@ -39,15 +58,31 @@ class GameManager:
             game = BoggleCache.gameid_to_game_cache.get(game_id)
             word_length = len(word)
             if word_length < game.acceptable_min_word_length:
-                return cls.build_response(cls.INVALID, cls.ERROR_WORD_TOO_SHORT, 0)
+                return cls.build_response(
+                    cls.INVALID,
+                    cls.ERROR_WORD_TOO_SHORT,
+                    0
+                )
             already_guessed = game.is_word_already_guessed(word)
             if bool(already_guessed) == True:
-                return cls.build_response(cls.INVALID, cls.ERROR_WORD_ALREADY_GUESSED, 0)
+                return cls.build_response(
+                    cls.INVALID,
+                    cls.ERROR_WORD_ALREADY_GUESSED,
+                    0
+                )
             exists = game.is_valid_word(word)
             if bool(exists) == True:
-                return cls.build_response(cls.VALID, cls.MESSAGE_VALID_WORD, len(word))
+                return cls.build_response(
+                    cls.VALID,
+                    cls.MESSAGE_VALID_WORD,
+                    len(word)
+                )
             else:
-                return cls.build_response(cls.INVALID, cls.ERROR_NOT_VALID_WORD, 0)
+                return cls.build_response(
+                    cls.INVALID,
+                    cls.ERROR_NOT_VALID_WORD,
+                    0
+                )
         return cls.build_response(cls.INVALID, cls.ERROR_NO_GAME_FOUND, 0)
 
     #

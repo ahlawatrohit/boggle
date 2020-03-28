@@ -3,7 +3,7 @@ from .trie_builder import TrieBuilder
 
 class BoggleCache:
     english_words_list = words.words()
-    english_words_trie_root = {'valid': False, 'next': {}}
+    english_words_trie_root = {'valid': False}
     gameid_to_game_cache = {}
 
     #
@@ -17,3 +17,10 @@ class BoggleCache:
             cls.english_words_list
             )
         print("Boggle Cache initalized")
+
+    #
+    # Get english dictionary trie node
+    #
+    @classmethod
+    def get_english_word_trie_root(cls):
+        return cls.english_words_trie_root
