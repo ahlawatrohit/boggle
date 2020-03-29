@@ -1,7 +1,5 @@
 Boggle Game - Python Django Backend
 
-<div style="width:260px;max-width:100%;"><div style="height:0;padding-bottom:81.15%;position:relative;"><iframe width="260" height="211" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameBorder="0" src="https://imgflip.com/embed/3uhswr"></iframe></div><p><a href="https://imgflip.com/gif/3uhswr">via Imgflip</a></p></div>
-
 Setup
 
 1. Create virtual environment for python where the project dependencies will be installed
