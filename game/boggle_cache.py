@@ -15,8 +15,7 @@ class BoggleCache:
     def load_english_dictionary(cls):
         cls.english_words_trie_root = TrieBuilder.build_english_words_trie(
             cls.english_words_list
-            )
-        print("Boggle Cache initalized")
+        )
 
     #
     # Get english dictionary trie node

@@ -19,6 +19,9 @@ class TrieBuilder:
             return
         if word[0] not in trie_node:
             trie_node[word[0]] = {'valid': len(word) == 1}
+        else:
+            if len(word) == 1:
+                trie_node[word[0]]['valid'] = True
         # recursively build trienode
         cls._generate_english_word_trie(word[1:], trie_node[word[0]])
 

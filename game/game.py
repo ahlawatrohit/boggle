@@ -52,7 +52,7 @@ class Game:
     #
     # Generate game grid with random characters from the above cells list
     #
-    def create_game_board(self):
+    def _create_game_board(self):
         for entry in Game.CELLS:
             self.grid = self.grid +  entry[random.randrange(0, 6)]
 
@@ -60,7 +60,7 @@ class Game:
     # Creates the valid words which can be made from the input grid
     # and stores it in a trie datastructure as part of Game object
     #
-    def create_valid_game_words(self, english_word_trie):
+    def _create_valid_game_words(self, english_word_trie):
         word_list = []
         self._game_words_trie(english_word_trie, word_list)
         game_trie = TrieBuilder.build_english_words_trie(word_list)
@@ -70,8 +70,8 @@ class Game:
     # Create a new game and initalize the board and valid words
     #
     def create_game(self, english_word_trie):
-        self.create_game_board()
-        self.create_valid_game_words(english_word_trie)
+        self._create_game_board()
+        self._create_valid_game_words(english_word_trie)
 
     #
     # Creates Game lite object which would be returned to the user
@@ -167,7 +167,7 @@ class Game:
                     board,
                     english_trie,
                     game_words_list
-                    )
+                )
 
     #
     # Recursively use dfs to populate valid word list for the game
