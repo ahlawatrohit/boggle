@@ -34,8 +34,10 @@ class TestCreateGame(TestCase):
         game.grid = 'EEEEEEEEEEEEEEEE'
         game._create_valid_game_words(BoggleCache.english_words_trie_root)
 
+        #
         # game_words_list returns all valid words of
         # length >= acceptable_min_word_length
+        #
         expected_words_list = []
         self.assertEqual(expected_words_list, game.get_game_words_list())
 

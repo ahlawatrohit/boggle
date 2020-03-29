@@ -23,6 +23,8 @@ class TestTrieBuilder(TestCase):
             'b': {'valid': True},
             'c': {'valid': True}
         }
+        trie = TrieBuilder.build_english_words_trie(english_words_list)
+        self.assertEqual(expected_trie, trie)
 
     def test_build_english_words_trie_two_letter_words(self):
         english_words_list = ['a', 'aa', 'b', 'bb', 'Aa']
@@ -37,6 +39,8 @@ class TestTrieBuilder(TestCase):
                 'b': {'valid': True}
             }
         }
+        trie = TrieBuilder.build_english_words_trie(english_words_list)
+        self.assertEqual(expected_trie, trie)
 
     def test_build_english_words_trie(self):
         english_words_list = ['app', 'ace', 'bin', 'bind', 'cats', 'cat', 'o']
@@ -75,7 +79,6 @@ class TestTrieBuilder(TestCase):
                 },
             'o': {'valid': True}
         }
-
         trie = TrieBuilder.build_english_words_trie(english_words_list)
         self.assertEqual(expected_trie, trie)
 
