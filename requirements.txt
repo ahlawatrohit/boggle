@@ -2,7 +2,7 @@ asgiref==3.2.5
 coverage==5.0.4
 Django==3.0.4
 django-cors-headers==3.2.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 nltk==3.4.5
 pytz==2019.3
 six==1.14.0
